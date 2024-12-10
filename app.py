@@ -30,8 +30,10 @@ st.markdown("""
         }
     </style>
 """, unsafe_allow_html=True)
+
 st.markdown('<div class="title">PPE Detection Demo</div>', unsafe_allow_html=True)
 st.progress(100)
+
 path = 'C:/projects/ppe-detection-poc/model.pt'
 try:
     model = YOLO(path)
@@ -56,25 +58,41 @@ if selected_video:
     count = 0
     while True:
         ret, frame = cap.read()
+        
+        # End video or error reading frame
         if not ret:
             st.info("End of video or error reading frame.")
             break
+        
         count += 1
+        
+        # Skip frames for performance optimization
         if count % 3 != 0: 
             continue
+        
+        # Resize the frame to fit the display
         frame = cv2.resize(frame, (1020, 600))
+
         try:
             results = model(frame)
         except Exception as e:
             st.error(f"Error during model inference: {e}")
             break
+
         try:
             annotated_frame = results[0].plot()
         except Exception as e:
             st.warning(f"Error annotating frame: {e}")
             annotated_frame = frame
+        
+        # Convert frame to RGB
         annotated_frame = cv2.cvtColor(annotated_frame, cv2.COLOR_BGR2RGB)
+
+        # Display the processed frame
         processed_frame_placeholder.image(annotated_frame, channels="RGB", use_container_width=True)
 
+
     cap.release()
-    st.markdown('<div class="footer"> 2024 Copyrights by Embrace AI Solutions. All Rights Reserved.</div>', unsafe_allow_html=True)
+
+
+st.markdown('<div class="footer">2024 @Copyright by Embrace AI Solutions. All Rights Reserved.</div>', unsafe_allow_html=True)
