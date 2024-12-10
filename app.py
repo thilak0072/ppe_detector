@@ -77,4 +77,4 @@ if selected_video:
         processed_frame_placeholder.image(annotated_frame, channels="RGB", use_container_width=True)
 
     cap.release()
-    st.center('<div class="footer"> 2024 Copyrights by Embrace AI Solutions. All Rights Reserved.</div>', unsafe_allow_html=True)
+    st.markdown('<div class="footer"> 2024 Copyrights by Embrace AI Solutions. All Rights Reserved.</div>', unsafe_allow_html=True)
