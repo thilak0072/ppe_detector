@@ -5,15 +5,8 @@ st.set_page_config(page_title="PPE Detection Demo", layout="wide")
 st.markdown("""
     <style>
         body {
-            background-color: black; 
-            color: white;  
-        }
-        .title {
-            text-align: center;
-            color: white;  
-            font-size: 36px;
-            font-weight: bold;
-            margin-top: 10px;
+            background-color: black;
+            color: white;
         }
         .footer {
             text-align: center;
@@ -21,17 +14,21 @@ st.markdown("""
             color: white;
             position: fixed;
             bottom: 0;
+            left: 0;
             width: 100%;
+            margin: 0;
             background-color: black;
             padding: 10px 0;
+            z-index: 9999;
         }
         .center-text {
             text-align: center;
         }
     </style>
+    <div class="footer">2024 @Copyright by Embrace AI Solutions. All Rights Reserved.</div>
 """, unsafe_allow_html=True)
 
-st.markdown('<div class="title">PPE Detection Demo</div>', unsafe_allow_html=True)
+st.title('PPE Detection Demo')
 st.progress(100)
 
 path = './model.pt'
@@ -95,4 +92,3 @@ if selected_video:
     cap.release()
 
 
-st.markdown('<div class="footer">2024 @Copyright by Embrace AI Solutions. All Rights Reserved.</div>', unsafe_allow_html=True)
