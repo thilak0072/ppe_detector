@@ -30,7 +30,7 @@ st.markdown("""
             text-align: center;
         }
     </style>
-    <div class="footer">2024 @Copyright by Embrace AI Solutions. All Rights Reserved.</div>
+    <div class="footer">2024 @Copyright by Embrais AI Solutions. All Rights Reserved.</div>
 """, unsafe_allow_html=True)
 
 # Title
