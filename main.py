@@ -1,13 +1,13 @@
 import cv2
 from ultralytics import YOLO
-path = 'C:/projects/ppe-detection-poc/model.pt'
+path = './model.pt'
 try:
     model = YOLO(path)
     print("Model loaded successfully!")
 except Exception as e:
     print(f"Error loading model: {e}")
     exit()
-cap = cv2.VideoCapture('test.mp4')
+cap = cv2.VideoCapture('video2.mp4')
 if not cap.isOpened():
     print("Error: Could not open video file!")
     exit()
