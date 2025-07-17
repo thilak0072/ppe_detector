@@ -10,3 +10,4 @@ requests==2.32.3
 Pillow==11.0.0
 scipy==1.14.1
 roboflow==1.1.49
+

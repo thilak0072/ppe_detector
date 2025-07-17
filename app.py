@@ -48,7 +48,7 @@ model = load_model(path)
 if model is None:
     st.stop()
 
-video_options = ["video1.mp4", "video2.mp4", "video3.mp4", "video4.mp4"]
+video_options = ["video1.mp4", "video2.mp4", "video3.mp4", "video4.mp4", "video5.mp4"]
 selected_video = st.selectbox("Select a video for PPE detection:", video_options)
 ppe_options = ["All", "Hardhat", "Safety Vest", "Mask", "Person"]
 selected_ppe = st.radio("Select PPE to detect:", ppe_options)
@@ -73,7 +73,7 @@ if selected_video:
         progress_bar = st.progress(0)
 
     conf = 0.4
-    iou =0.4
+    iou = 0.4
 
     frame_count = 0
     skip_frames = 5
@@ -83,6 +83,23 @@ if selected_video:
         "Mask": ["Mask", "NO-Mask"],
         "Person": ["Person"]
     }
+
+    def preprocess_frame(frame):
+        """
+        Preprocess the frame to handle blur and glare.
+        """
+        # Convert to grayscale for consistent processing
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+
+        # Reduce glare using histogram equalization
+        equalized = cv2.equalizeHist(gray)
+
+        # Apply GaussianBlur to reduce noise and handle blur
+        blurred = cv2.GaussianBlur(equalized, (5, 5), 0)
+
+        # Convert back to BGR for detection compatibility
+        processed_frame = cv2.cvtColor(blurred, cv2.COLOR_GRAY2BGR)
+        return processed_frame
 
     while True:
         ret, frame = cap.read()
@@ -97,9 +114,12 @@ if selected_video:
 
         frame = cv2.resize(frame, (640, 480))
 
+        # Apply preprocessing
+        preprocessed_frame = preprocess_frame(frame)
+
         try:
-            results = model(frame, conf=0.4, iou=0.4, verbose=False, device='cpu', half=False, max_det=10)
-            annotated_frame = frame.copy()
+            results = model(preprocessed_frame, conf=0.4, iou=0.4, verbose=False, device='cpu', half=False, max_det=10)
+            annotated_frame = preprocessed_frame.copy()
 
             for result in results[0].boxes:
                 bbox = result.xyxy[0].cpu().numpy()
