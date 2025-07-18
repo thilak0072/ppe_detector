@@ -1,0 +1,13 @@
+torch==2.5.1
+streamlit==1.41.0
+ultralytics==8.3.49
+opencv-python-headless== 4.10.0.84
+numpy==2.2.0
+pandas==2.2.3
+matplotlib==3.9.4
+scikit-learn==1.6.0
+requests==2.32.3
+Pillow==11.0.0
+scipy==1.14.1
+roboflow==1.1.49
+
